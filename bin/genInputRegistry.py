@@ -6,9 +6,9 @@ import re
 import sqlite
 import sys
 import datetime
-import lsst.daf.base   as dafBase
+import lsst.daf.base as dafBase
 import lsst.pex.policy as pexPolicy
-import lsst.afw.image  as afwImage
+import lsst.afw.image as afwImage
 
 
 import argparse
@@ -51,7 +51,7 @@ for fits in files:
     year = int(year)
     doy = int(doy)
     frac = int(frac)
-    
+
     hours = int(frac*24/10**6)
     sec = frac*86400/10**6 - hours*3600
 

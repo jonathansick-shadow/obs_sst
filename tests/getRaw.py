@@ -38,6 +38,7 @@ class GetRawTestCase(unittest.TestCase):
                        'doy': 89,
                        'frac': 132221,
                        }
+
     def tearDown(self):
         del self.butler
 
@@ -47,10 +48,10 @@ class GetRawTestCase(unittest.TestCase):
         print "width: ", exp.getWidth()
         print "height: ", exp.getHeight()
         print "detector name: ", exp.getDetector().getId().getName()
-        
+
         self.assertEqual(exp.getWidth(), self.size[0])
         self.assertEqual(exp.getHeight(), self.size[1])
-        self.assertEqual(exp.getFilter().getFilterProperty().getName(), "OPEN") 
+        self.assertEqual(exp.getFilter().getFilterProperty().getName(), "OPEN")
         self.assertEqual(exp.getDetector().getId().getName(), "%d,%d" % (ccd % 6, ccd // 6))
 
     def testRaw(self):
@@ -65,7 +66,7 @@ class GetRawTestCase(unittest.TestCase):
                 for amp in ccd:
                     amp = cameraGeom.cast_Amp(amp)
                     print ccd.getId(), amp.getId(), amp.getDataSec().toString(), \
-                          amp.getBiasSec().toString(), amp.getElectronicParams().getGain()
+                        amp.getBiasSec().toString(), amp.getElectronicParams().getGain()
                 cameraGeomUtils.showCcd(ccd, ccdImage=raw, frame=frame)
                 frame += 1
 
@@ -78,6 +79,7 @@ class GetRawTestCase(unittest.TestCase):
 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+
 def suite():
     """Returns a suite containing all the test cases in this module."""
 
@@ -87,6 +89,7 @@ def suite():
     suites += unittest.makeSuite(GetRawTestCase)
     suites += unittest.makeSuite(utilsTests.MemoryTestCase)
     return unittest.TestSuite(suites)
+
 
 def run(shouldExit = False):
     """Run the tests"""

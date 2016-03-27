@@ -12,7 +12,9 @@ import lsst.afw.image.utils as afwImageUtils
 from lsst.daf.butlerUtils import CameraMapper, exposureFromImage
 import lsst.pex.policy as pexPolicy
 
+
 class SstMapper(CameraMapper):
+
     def __init__(self, outputRoot=None, **kwargs):
         policyFile = pexPolicy.DefaultPolicyFile("obs_sst", "SstMapper.paf", "policy")
         policy = pexPolicy.Policy(policyFile)
@@ -22,8 +24,8 @@ class SstMapper(CameraMapper):
 
     def _extractDetectorName(self, dataId):
         ccd = dataId['ccd']
-        x,y = ccd % 6, ccd // 6
-        return "%d,%d" % (x,y)
+        x, y = ccd % 6, ccd // 6
+        return "%d,%d" % (x, y)
 
     def _defectLookup(self, dataId, ccdSerial):
         """Find the defects for a given CCD.
@@ -31,7 +33,7 @@ class SstMapper(CameraMapper):
         @param ccdSerial (string) CCD serial number
         @return (string) path to the defects file or None if not available
         """
-        return None # XXX FIXME
+        return None  # XXX FIXME
 
     def _computeCcdExposureId(self, dataId):
         """Compute the 64-bit (long) identifier for a CCD exposure.
@@ -43,13 +45,13 @@ class SstMapper(CameraMapper):
         doy = pathId['doy']
         sod = pathId['frac']
         ccd = pathId['ccd']
-        return 0 # XXX FIXME
+        return 0  # XXX FIXME
 
     def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
         return self._computeCcdExposureId(dataId)
 
     def bypass_ccdExposureId_bits(self, datasetType, pythonType, location, dataId):
-        return 32 # not really, but this leaves plenty of space for sources
+        return 32  # not really, but this leaves plenty of space for sources
 
     def _computeStackExposureId(self, dataId):
         """Compute the 64-bit (long) identifier for a Stack exposure.
@@ -63,7 +65,7 @@ class SstMapper(CameraMapper):
         return self._computeStackExposureId(dataId)
 
     def bypass_stackExposureId_bits(self, datasetType, pythonType, location, dataId):
-        return 32 # not really, but this leaves plenty of space for sources
+        return 32  # not really, but this leaves plenty of space for sources
 
     def _setTimes(self, mapping, item, dataId):
         """Set the exposure time and exposure midpoint in the calib object in an Exposure.
@@ -77,7 +79,7 @@ class SstMapper(CameraMapper):
         doy = dataId['doy']
         frac = dataId['frac']
 
-        exptime = 1.0 # XXX FIXME
+        exptime = 1.0  # XXX FIXME
 
         calib = item.getCalib()
         calib.setExptime(exptime)
@@ -93,7 +95,7 @@ class SstMapper(CameraMapper):
         ccd = dataId['ccd']
         x, y = ccd % 6, ccd // 6
         xSize, ySize = 2048, 4096
-    
+
         filename = location.getLocations()[0]
         bbox = afwGeom.Box2I(afwGeom.Point2I(x * xSize, y * ySize), afwGeom.Extent2I(xSize, ySize))
         if False:
@@ -106,7 +108,7 @@ class SstMapper(CameraMapper):
             raw = afwImage.ImageF(filename)
             sub = raw.Factory(raw, bbox, True)
             del raw
-            sub.setXY0(afwGeom.Point2I(0,0))
+            sub.setXY0(afwGeom.Point2I(0, 0))
             image = afwImage.DecoratedImageF(sub)
             del sub
 
